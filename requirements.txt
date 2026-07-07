@@ -1,0 +1,26 @@
+# Core LangChain
+langchain
+langchain-core
+
+# LangGraph agent + memory
+langgraph
+
+# Model provider
+langchain-ollama
+
+# Vector database
+langchain-chroma
+chromadb
+
+# HuggingFace embeddings
+langchain-huggingface
+sentence-transformers
+
+# Document loading
+langchain-community
+
+# Text splitting
+langchain-text-splitters
+
+# Web search tool
+duckduckgo-search

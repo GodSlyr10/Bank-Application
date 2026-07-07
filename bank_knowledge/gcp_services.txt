@@ -1,0 +1,16 @@
+[BANK GOVERNANCE POLICY - APPROVED GCP SERVICES]
+Policy ID: BANK-GCP-SVC-2026-V2
+
+1. APPROVED GCP SERVICES FOR PRODUCTION AND NON-PROD:
+- Compute Engine (Approved for approved OS images only: RHEL 8/9, Ubuntu 22.04 LTS).
+- Google Kubernetes Engine (GKE) (Must use Private Clusters with Master Authorized Networks).
+- Cloud Storage (GCS) (Must have uniform bucket-level access enabled; Public access strictly prohibited).
+- Cloud SQL (Approved engines: PostgreSQL and MySQL; Must use private IP with SSL enforcement).
+- Secret Manager (Mandatory service for storing API keys, DB credentials, and TLS certificates).
+- BigQuery (Approved for internal analytics; Data must be encrypted with Customer-Managed Encryption Keys - CMEK).
+- Cloud Functions (2nd Gen) (Approved for event-driven processing; VPC Service Controls enforced).
+
+2. RESTRICTED / BANNED GCP SERVICES:
+- Firebase Services (Banned due to public cloud storage routing policies).
+- AI Platform / Vertex AI Public Endpoints (Banned unless data governance exemption is granted).
+- Cloud Spanner (Restricted due to cost governance; requires Enterprise Architecture Review Board approval).

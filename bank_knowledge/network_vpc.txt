@@ -1,0 +1,20 @@
+[BANK NETWORK STANDARDS - VPC AND FIREWALL CONFIGURATIONS]
+Policy ID: BANK-NET-VPC-2026-V3
+
+1. VPC NETWORK ARCHITECTURE:
+- Shared VPC Topology is mandatory. Standard VPC creation inside individual projects is prohibited.
+- Host Project ID: `bank-network-host-prod-01`
+- Approved Region: `us-east4` (Primary) and `us-central1` (Secondary DR).
+- Private Google Access MUST be enabled on all subnets.
+
+2. APPROVED VPC SUBNET CIDR RANGES:
+- Production Apps Subnet: 10.240.0.0/20
+- Production DB Subnet: 10.240.16.0/20
+- GKE Pods CIDR: 10.241.0.0/16
+- GKE Services CIDR: 10.242.0.0/20
+
+3. MANDATORY FIREWALL RULES:
+- rule-allow-internal-mesh: Allow TCP ports 443, 8443, 9090 between internal application subnets (10.240.0.0/16).
+- rule-deny-all-ingress: Default deny all inbound traffic from 0.0.0.0/0.
+- rule-allow-bastion-ssh: Allow TCP port 22 ONLY from internal Admin Bastion Host IP (10.200.5.10/32).
+- Egress Traffic: All internet-bound egress must pass through Cloud NAT with static public IPs or On-Premises Proxy.

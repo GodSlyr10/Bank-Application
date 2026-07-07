@@ -1,0 +1,21 @@
+[BANK IAM GOVERNANCE - ROLES AND PERMISSIONS STANDARDS]
+Policy ID: BANK-IAM-POL-2026-V1
+
+1. GENERAL IAM RULES:
+- Principle of Least Privilege (PoLP) must be enforced across all environments.
+- Primitive roles (Owner, Editor, Viewer) are STRICTLY PROHIBITED in dev, staging, and production environments.
+
+2. ALLOWED PREDEFINED IAM ROLES:
+- roles/container.developer (Kubernetes Engine Developer - for application deployment)
+- roles/cloudsql.client (Cloud SQL Client - for service account database connections)
+- roles/secretmanager.secretAccessor (Secret Manager Secret Accessor - for fetching secrets at runtime)
+- roles/storage.objectViewer (Storage Object Viewer - read-only access to specific GCS buckets)
+- roles/logging.logWriter (Logging Log Writer - system service account log ingestion)
+
+3. CUSTOM BANK IAM ROLES:
+- bankCustomRoles/BankDevOpsAdmin: Permitted to manage deployment pipelines via Terraform Enterprise only.
+- bankCustomRoles/BankAuditorReadonly: Permitted to query Cloud Audit Logs and Security Command Center.
+
+4. SERVICE ACCOUNTS:
+- Service account key creation (.json keys) is DISABLED via organization policy.
+- Workload Identity Federation must be used for all external pipelines (GitHub Actions, TFE).

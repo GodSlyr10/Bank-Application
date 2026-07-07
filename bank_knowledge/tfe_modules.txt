@@ -1,0 +1,23 @@
+[BANK TERRAFORM ENTERPRISE (TFE) MODULE REGISTRY]
+Registry Location: `://bank.com`
+
+1. APPROVED INFRASTRUCTURE MODULES:
+- Module: `://bank.com/gke/google`
+  - Version: `3.2.0`
+  - Description: Provisions a standardized private GKE cluster pre-configured with bank logging, monitoring, and network rules.
+
+- Module: `://bank.com/cloud-sql/google`
+  - Version: `2.1.0`
+  - Description: Deploys PostgreSQL/MySQL Cloud SQL instances with private IP, automated backups, and SSL enforced.
+
+- Module: `://bank.com/secure-bucket/google`
+  - Version: `1.4.1`
+  - Description: Deploys Cloud Storage buckets with mandatory CMEK encryption, retention policy, and public access blocks.
+
+- Module: `://bank.com/vpc-subnet/google`
+  - Version: `1.0.0`
+  - Description: Attaches service projects to the central Shared VPC network and provisions approved subnets.
+
+2. TF EXECUTION RULES:
+- All deployments must pass Sentinel policy checks (`sentinel-bank-compliance-v2`).
+- Hardcoded credentials inside `.tf` files will result in automated pipeline termination.
