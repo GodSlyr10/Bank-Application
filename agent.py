@@ -65,103 +65,103 @@ async def run_agent():
 
     session_id = "bank_dev_session_1"
 
+    try:
 
-    while True:
+        while True:
 
-        try:
+            
 
-            user_input = input(
-                "You: "
-            ).strip()
+                user_input = input(
+                    "You: "
+                ).strip()
 
 
-            if user_input.lower() in [
-                "exit",
-                "quit"
-            ]:
+                if user_input.lower() in [
+                    "exit",
+                    "quit"
+                ]:
+                    print(
+                        "\nEnding session. Goodbye!"
+                    )
+                    break
+
+
+                if not user_input:
+                    continue
+
+
+                # -------------------------
+                # Prompt Injection Detection
+                # -------------------------
+
+                if detect_prompt_injection(
+                    user_input
+                ):
+
+                    print(
+                        "\n=== Agent Response ==="
+                    )
+
+                    print(
+                        "Your request appears to contain "
+                        "instructions that attempt to override "
+                        "the assistant's operating rules. "
+                        "Please ask a question related to bank "
+                        "infrastructure, GCP, or internal bank policy."
+                    )
+
+                    print(
+                        "======================\n"
+                    )
+
+                    continue
+
+
+
                 print(
-                    "\nEnding session. Goodbye!"
+                    "\n--- Processing Request ---"
                 )
-                break
 
 
-            if not user_input:
-                continue
+                response = await agent.ainvoke(
+                    {
+                        "messages": [
+                            HumanMessage(
+                                content=user_input
+                            )
+                        ]
+                    },
+                    config={
+                        "configurable": {
+                            "thread_id": session_id
+                        }
+                    },
+                )
 
-
-            # -------------------------
-            # Prompt Injection Detection
-            # -------------------------
-
-            if detect_prompt_injection(
-                user_input
-            ):
 
                 print(
                     "\n=== Agent Response ==="
                 )
 
                 print(
-                    "Your request appears to contain "
-                    "instructions that attempt to override "
-                    "the assistant's operating rules. "
-                    "Please ask a question related to bank "
-                    "infrastructure, GCP, or internal bank policy."
+                    response["messages"][-1].content
                 )
 
                 print(
                     "======================\n"
                 )
 
-                continue
 
+    except KeyboardInterrupt:
 
+        print(
+            "\nSession interrupted. Goodbye!"
+        )
 
-            print(
-                "\n--- Processing Request ---"
-            )
+    
+    finally:
 
-
-            response = await agent.ainvoke(
-                {
-                    "messages": [
-                        HumanMessage(
-                            content=user_input
-                        )
-                    ]
-                },
-                config={
-                    "configurable": {
-                        "thread_id": session_id
-                    }
-                },
-            )
-
-
-            print(
-                "\n=== Agent Response ==="
-            )
-
-            print(
-                response["messages"][-1].content
-            )
-
-            print(
-                "======================\n"
-            )
-
-
-        except KeyboardInterrupt:
-
-            print(
-                "\nSession interrupted. Goodbye!"
-            )
-
-            break
-        
-        finally:
-
-            await mcp_manager.close()
+        await mcp_manager.close()
 
 
 
