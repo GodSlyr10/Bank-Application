@@ -24,3 +24,9 @@ langchain-text-splitters
 
 # Web search tool
 duckduckgo-search
+
+# mcp 
+mcp[cli]
+
+# mcp adapter
+langchain-mcp-adapters
